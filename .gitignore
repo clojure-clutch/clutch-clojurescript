@@ -1,0 +1,21 @@
+# various editor-related files
+*~
+.*.sw*
+.#*
+\#*
+nb-configuration.xml
+.classpath
+.project
+.settings
+
+# build artifacts
+/*.jar
+build
+target
+lib
+classes
+autodoc
+
+# clojars
+pom.xml
+*clojars.org
