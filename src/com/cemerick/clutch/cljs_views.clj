@@ -7,10 +7,6 @@
 ; * no ClojureScript library
 ; * large code footprint, even for the simplest of views
 ; ** probably not anything we can do about that in general (e.g. use `map`, get all the code for collections, seqs, etc)
-; * namespaces and function names and gensyms might be tricky:
-; ** how long-lived are the view servers?  How about in non-Apache CouchDB (cloudant)?
-; ** def'ing named vars might cause collisions, unintentional use of different versions of required cljs code, etc
-; ** maybe not a problem; see what large view implementations do in terms of namespacing
 
 (defn- expand-anon-fn
   "Compiles a single anonymous function body in a dummy namespace, with a gensym'ed
@@ -28,9 +24,9 @@
       (list 'def name fnbody)]]))
 
 (defn- view*
-  [options & body]
-  (let [[options' body] (if (== 1 (count body))
-                          (expand-anon-fn (first body))
+  [options body]
+  (let [[options' body] (if (and (list? body) (= 'fn (first body)))
+                          (expand-anon-fn body)
                           [nil (vec body)])
         options (merge {:optimizations :advanced :pretty-print false}
                        options'
