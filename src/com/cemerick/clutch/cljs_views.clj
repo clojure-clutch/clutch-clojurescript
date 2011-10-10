@@ -1,5 +1,7 @@
 (ns com.cemerick.clutch.cljs-views
-  (:require [cljs.closure :as closure]))
+  (:require
+    [com.ashafa.clutch :as clutch]
+    [cljs.closure :as closure]))
 
 ; TODO
 ; * no ClojureScript library
@@ -25,8 +27,7 @@
      [(list 'ns namespace)
       (list 'def name fnbody)]]))
 
-(defn view*
-  "Compiles a body of "
+(defn- view*
   [options & body]
   (let [[options' body] (if (== 1 (count body))
                           (expand-anon-fn (first body))
@@ -50,14 +51,41 @@
        code
        "})()"))
 
-(def view* (comp closure view*))
+(def view
+  "Compiles a body of ClojureScript into a single Javascript expression, suitable for use in a
+   CouchDB view.  First argument may be a map of options; remaining arguments must be either
+   (a) a single anonymous function, or (b) a series of top-level ClojureScript forms, starting
+   with an `ns` declaration.  If (b), the map of options must include a `:main` entry to identify
+   the \"entry point\" for the CouchDB view/filter/validator/etc.
 
-(defmacro view
-  [& body]
-  (let [[options body] (if (map? (first body))
-                         [(first body) (rest body)]
-                         [nil body])]
-    (apply view* options body)))
+   Contrived examples:
+
+   (view nil '(fn [doc]
+                (js/emit (aget doc \"_id\") nil)))
+
+   (view {:main 'some-view/main}
+     '(ns some-view)
+     '(defn date-components [date]
+        (-> (re-seq #\"(\\d{4})-(\\d{2})-(\\d{2})\" date)
+          first
+          rest))
+     '(defn main [doc]
+        (js/emit (apply array (-> doc (aget \"date\") date-components)) nil)))
+
+   If using clutch, you should never have to touch this function.  It is registered with clutch
+   as a view-transformer; just use the view-server-fns macro, indicating a view server language of
+   :cljs. 
+
+   You can also include ClojureScript/Google Closure compiler options in the options map, e.g.
+   :optimizations, :pretty-print, etc.  These options default to :advanced compilation, no
+   pretty-printing."
+  (comp closure view*))
+
+(defmethod clutch/view-transformer :cljs
+  [_]
+  {:language :javascript
+   :compiler (fn [options]
+               (partial view options))})
 
 #_(println (view* nil
                   '(fn [doc]
