@@ -1,4 +1,6 @@
-= ClojureScript views for CouchDB
+*ClojureScript views for CouchDB*
+
+Write your views/filters/validators in Clojure(Script), run the results in CouchDB/Couchbase/Cloudant — no special view servers, no special configuration, no JavaScript!
 
 == Status
 
