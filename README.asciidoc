@@ -91,7 +91,7 @@ If you really want to see what Javascript ClojureScript is generating for your v
 
 * ClojureScript is not yet available as a proper library.  This forces me to include some 'binary' version of it in this git repo (a hefty 8.3MB!…which includes various google JavaScript UI bits that I'd hope would be broken out eventually), and bundle the necessary bits into the clutch-clojurescript jar.  I would very much like to roll clutch-clojurescript's functionality into Clutch proper, but I'll not do so until the latter can rely upon a ClojureScript dependency.
 * ClojureScript / Google Closure produces a _very_ large code footprint, even for the simplest of view functions.  This is apparently an item of active development in ClojureScript.
-** In any case, the code size of a view function string should have little to no impact on runtime performance of that view.  The only penalty to be paid should be in view server initialization, which should be relatively infrequent.  Further, the vast majority of view runtime is dominated by actual document processing, not the loading of a handful of JavaScript functions.
+** In any case, the code size of a view function string should have little to no impact on runtime performance of that view.  The only penalty to be paid should be in view server initialization, which should be relatively infrequent.  Further, the vast majority of view runtime is dominated by IO and actual document processing, not the loading of a handful of JavaScript functions.
 
 == Need Help?
 
