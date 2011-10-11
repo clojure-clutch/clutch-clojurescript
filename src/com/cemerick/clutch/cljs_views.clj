@@ -3,11 +3,6 @@
     [com.ashafa.clutch :as clutch]
     [cljs.closure :as closure]))
 
-; TODO
-; * no ClojureScript library
-; * large code footprint, even for the simplest of views
-; ** probably not anything we can do about that in general (e.g. use `map`, get all the code for collections, seqs, etc)
-
 (defn- expand-anon-fn
   "Compiles a single anonymous function body in a dummy namespace, with a gensym'ed
    name. Separate from the general case because cljs doesn't include cljs.core and
@@ -82,11 +77,5 @@
   {:language :javascript
    :compiler (fn [options]
                (partial view options))})
-
-#_(println (view* nil
-                  '(fn [doc]
-                     (when-let [key (and (aget doc "order")
-                                         (subs (aget doc "support-through") 0 10))]
-                       (js/emit (apply array [key (aget doc "qty")]) nil)))))
 
 
