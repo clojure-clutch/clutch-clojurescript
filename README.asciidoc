@@ -13,7 +13,7 @@ clutch-clojurescript is available in clojars.  Add it to your Maven project's `p
 ----
 <dependency>
   <groupId>com.cemerick.clutch</groupId>
-  <artifactId>cljs-views</artifactId>
+  <artifactId>clutch-clojurescript</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 </dependency>
 ----
@@ -21,7 +21,7 @@ clutch-clojurescript is available in clojars.  Add it to your Maven project's `p
 or your leiningen/cake project.clj:
 
 ----
-[com.cemerick.clutch/cljs-views "0.0.1-SNAPSHOT"]
+[com.cemerick.clutch/clutch-clojurescript "0.0.1-SNAPSHOT"]
 ----
 
 == Usage
