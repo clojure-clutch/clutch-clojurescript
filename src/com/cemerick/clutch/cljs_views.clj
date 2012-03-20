@@ -77,5 +77,3 @@
   {:language :javascript
    :compiler (fn [options]
                (partial view options))})
-
-
