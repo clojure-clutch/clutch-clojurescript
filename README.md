@@ -1,50 +1,50 @@
-*ClojureScript views for CouchDB*
+# ClojureScript views for CouchDB
 
 Write your views/filters/validators in Clojure(Script), run the results in CouchDB/Couchbase/Cloudant — no special view servers, no special configuration, no JavaScript!
 
-== Status
+## Status
 
 Super-experimental, but works.
 
-== "Installing"
+## "Installing"
 
 clutch-clojurescript is available in clojars.  Add it to your Maven project's `pom.xml`:
 
-----
+```xml
 <dependency>
   <groupId>com.cemerick.clutch</groupId>
   <artifactId>clutch-clojurescript</artifactId>
   <version>0.0.1-SNAPSHOT</version>
 </dependency>
-----
+```
 
-or your leiningen/cake project.clj:
+or your leiningen/cake `project.clj`:
 
-----
+```clojure
 [com.cemerick.clutch/clutch-clojurescript "0.0.1-SNAPSHOT"]
-----
+```
 
-== Usage
+## Usage
 
-This is an extension of http://github.com/ashafa/clutch[Clutch], the CouchDB client library and view server for Clojure.
+This is an extension of [Clutch](http://github.com/ashafa/clutch), the CouchDB client library and view server for Clojure.
 
 1. Load Clutch as you usually would.
 2. Make sure you've loaded clutch-clojurescript, e.g. `(require 'com.cemerick.clutch.cljs-views)`, or `(:require com.cemerick.clutch.cljs-views)` in your `ns` form.  Note that you'll never need to directly access anything defined in `com.cemerick.clutch.cljs-views` — you only need to load the namespace to allow it to register a multimethod implementation in clutch's core API.
 3. Save a view using Clutch's usual `save-view` function:
 
-----
+```clojure
 (with-db "your_database"
   (save-view "design_document_name"
     (view-server-fns :cljs
       {:your-view-name {:map (fn [doc]
                                (js/emit (aget doc "_id") nil))}})))
-----
+```
 
 That's an example of a silly view, but should demonstrate the general pattern.  Note the `js/emit` function; after ClojureScript compilation, this results in a call to the `emit` function defined by the standard CouchDB Javascript view server for emitting an entry into the view result.  Follow the same conventions for reduce functions, filter functions, validator functions, etc.
 
 Your views can utilize larger codebases; just include your "top-level" ClojureScript forms in a vector:
 
-----
+```clojure
 (with-db "your_database"
   (save-view "design_document_name"
     (view-server-fns {:language :cljs
@@ -56,7 +56,7 @@ Your views can utilize larger codebases; just include your "top-level" ClojureSc
                               (defn ^:export main
                                 [doc]
                                 (js/emit (concat (aget doc "_id") (aget doc "_rev")) nil))]}})))
-----
+```
 
 The `ns` form here can require other ClojureScript files on your classpath, refer to macros, etc.  When using this longer form, remember to do three things:
 
@@ -66,41 +66,43 @@ The `ns` form here can require other ClojureScript files on your classpath, refe
 
 These last two points are required because of the default ClojureScript compilation option of `:advanced` optimizations.
 
-=== Compilation options
+### Compilation options
 
 The `view-server-fns` macro provided by Clutch (version `0.3.0-SNAPSHOT` and later) takes as its first argument some options to pass along to the view transformer specified in that options map's `:language` slot.  The clutch-clojurescript view transformer passes this options map along to the ClojureScript/Google Closure compiler, with defaults of:
 
-----
+```clojure
 {:optimizations :advanced
  :pretty-print false}
-----
+```
 
 So you can e.g. disable `:advanced` optimizations and turn on pretty-printing by passing this options map to `view-server-fns`:
 
-----
+```clojure
 {:optimizations :simple
  :pretty-print true
  :language :cljs}
-----
+```
 
-=== Internals
+### Internals
 
 If you really want to see what Javascript ClojureScript is generating for your view function(s), call `com.cemerick.clutch.cljs-views/view` with an options map as described above (`nil` to accept the defaults) and either an anonymous function body or vector of ClojureScript top-level forms. 
 
-== Caveats
+## Caveats
 
-* ClojureScript is not yet available as a proper library.  This forces me to include some 'binary' version of it in this git repo (a hefty 8.3MB!…which includes various google JavaScript UI bits that I'd hope would be broken out eventually), and bundle the necessary bits into the clutch-clojurescript jar.  I would very much like to roll clutch-clojurescript's functionality into Clutch proper, but I'll not do so until the latter can rely upon a ClojureScript dependency.
 * ClojureScript / Google Closure produces a _very_ large code footprint, even for the simplest of view functions.  This is apparently an item of active development in ClojureScript.
 ** In any case, the code size of a view function string should have little to no impact on runtime performance of that view.  The only penalty to be paid should be in view server initialization, which should be relatively infrequent.  Further, the vast majority of view runtime is dominated by IO and actual document processing, not the loading of a handful of JavaScript functions.
 
-== Need Help?
+## Need Help?
 
-Ping `cemerick` on freenode irc or twitter if you have questions
-or would like to contribute patches.
+Ping `cemerick` on freenode irc or twitter if you have questions or would like to contribute patches.
 
-== License
+## License
 
-Copyright © 2011 http://cemerick.com[Chas Emerick].
+Copyright © 2011 [Chas Emerick](http://cemerick.com).
 
+<<<<<<< HEAD:README.asciidoc
 Licensed under the EPL. (See the file epl-v10.html.)
  
+=======
+Licensed under the EPL. (See the file `epl-v10.html`.)
+>>>>>>> 78465c6f7b05cf9b044bf84b5e4628e6862fa1d3:README.md
