@@ -1,6 +1,6 @@
 # ClojureScript views for CouchDB
 
-Write your views/filters/validators in Clojure(Script), run the results in CouchDB/Couchbase/Cloudant — no special view servers, no special configuration, no JavaScript!
+Write your views/filters/validators in Clojure(Script), run the results in CouchDB or Cloudant — no special view servers, no special configuration, no JavaScript!
 
 ## Status
 
@@ -14,14 +14,14 @@ clutch-clojurescript is available in clojars.  Add it to your Maven project's `p
 <dependency>
   <groupId>com.cemerick.clutch</groupId>
   <artifactId>clutch-clojurescript</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
 </dependency>
 ```
 
 or your leiningen/cake `project.clj`:
 
 ```clojure
-[com.cemerick.clutch/clutch-clojurescript "0.0.1-SNAPSHOT"]
+[com.cemerick.clutch/clutch-clojurescript "0.0.1"]
 ```
 
 ## Usage
@@ -98,11 +98,7 @@ Ping `cemerick` on freenode irc or twitter if you have questions or would like t
 
 ## License
 
-Copyright © 2011 [Chas Emerick](http://cemerick.com).
+Copyright © 2011-2012 [Chas Emerick](http://cemerick.com) and other
+contributors.
 
-<<<<<<< HEAD:README.asciidoc
 Licensed under the EPL. (See the file epl-v10.html.)
- 
-=======
-Licensed under the EPL. (See the file `epl-v10.html`.)
->>>>>>> 78465c6f7b05cf9b044bf84b5e4628e6862fa1d3:README.md
