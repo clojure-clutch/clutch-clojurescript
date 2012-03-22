@@ -90,7 +90,7 @@ If you really want to see what Javascript ClojureScript is generating for your v
 ## Caveats
 
 * ClojureScript / Google Closure produces a _very_ large code footprint, even for the simplest of view functions.  This is apparently an item of active development in ClojureScript.
-** In any case, the code size of a view function string should have little to no impact on runtime performance of that view.  The only penalty to be paid should be in view server initialization, which should be relatively infrequent.  Further, the vast majority of view runtime is dominated by IO and actual document processing, not the loading of a handful of JavaScript functions.
+    * In any case, the code size of a view function string should have little to no impact on runtime performance of that view.  The only penalty to be paid should be in view server initialization, which should be relatively infrequent.  Further, the vast majority of view runtime is dominated by IO and actual document processing, not the loading of a handful of JavaScript functions.
 
 ## Need Help?
 
