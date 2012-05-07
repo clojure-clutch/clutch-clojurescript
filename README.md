@@ -1,3 +1,11 @@
+# DEPRECATED
+
+clutch-clojurescript's functionality has been folded into [Clutch proper](https://github.com/clojure-clutch/clutch/),
+so this project is deprecated.
+
+Head over to [Clutch](https://github.com/clojure-clutch/clutch/) to see how you can write
+your CouchDB views using ClojureScript.
+
 # ClojureScript views for CouchDB
 
 Write your views/filters/validators in Clojure(Script), run the results in CouchDB or Cloudant — no special view servers, no special configuration, no JavaScript!
